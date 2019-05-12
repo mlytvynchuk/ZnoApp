@@ -14,9 +14,9 @@ class SubjectDetailScreen extends Component {
                         type: "choice",
                         question: "Скільки буде 5+5",
                         choice1: "3",
-                        choice2: "11",
+                        choice2: "8",
                         choice3: "10",
-                        choice4: "12",
+                        choice4: "5",
                         answer: 3
                     },
                     {
@@ -69,7 +69,7 @@ class SubjectDetailScreen extends Component {
     }
     static navigationOptions = ({ navigation }) => {
         return {
-            title: navigation.getParam('name'),
+            headerTitle: (<Text style={styles.h1}>{navigation.getParam('name')}</Text>),
             // headerLeft: (
             //     <Text style={styles.BackButton} onPress={() => navigation.goBack()}>{"<"}</Text>
             // ),
@@ -101,6 +101,12 @@ const styles = StyleSheet.create({
     container: {
         padding: 10
     },
+    h1: {
+        fontSize: 25,
+        fontWeight: "700",
+        textAlign: "right",
+        width: "100%"
+    },
     BackButton: {
         // color: "#f5f5f5",
         margin: 15,
@@ -114,6 +120,6 @@ const styles = StyleSheet.create({
     },
     listText: {
         fontWeight: "500"
-    }
+    },
 })
 export default SubjectDetailScreen

@@ -7,10 +7,15 @@ export class SubjectTestScreen extends Component {
         questions: this.props.navigation.getParam('questions', [])
 
     }
+    static navigationOptions = ({ navigation }) => {
+        return {
+            title: navigation.getParam('name')
+        }
+    }
     render() {
         return (
             <View style={styles.container}>
-                <SubjectTest name={this.state.name} questions={this.state.questions} />
+                <SubjectTest navigation={this.props.navigation} name={this.state.name} questions={this.state.questions} />
             </View>
         )
     }
