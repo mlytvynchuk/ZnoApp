@@ -9,7 +9,7 @@ export class SubjectTestScreen extends Component {
     }
     static navigationOptions = ({ navigation }) => {
         return {
-            title: navigation.getParam('name')
+            header: null
         }
     }
     render() {

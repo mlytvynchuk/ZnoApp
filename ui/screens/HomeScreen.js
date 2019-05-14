@@ -3,6 +3,56 @@ import { StyleSheet, Text, ScrollView } from 'react-native';
 import ViewController from 'react-navigation'
 import SubjectList from '../containers/SubjectList';
 class HomeScreen extends Component {
+    state = {
+        subjects: [
+            {
+                name: "Математика",
+                tests: [
+                    {
+                        name: "Тест з математики зно 2017-2018",
+                        questions: [
+                            {
+                                type: "choices",
+                                question: "Скільки буде 5+5",
+                                image: require('../../ui/assets/img/uncheckedBox.png'),
+                                choices: ["A", "Б", "В", "Г", "Д"],
+                                answer: "А"
+                            },
+                            {
+                                type: "answer",
+                                question: "Скільки буде 15/5",
+                                image: require('../../ui/assets/img/uncheckedBox.png'),
+                                answer: "Б"
+                            },
+                        ],
+
+                    },
+                    {
+                        name: "Тест з математики зно 2018-2019",
+                        questions: [
+                            {
+                                type: "choices",
+                                question: "Скільки буде 51231+5",
+                                image: require('../../ui/assets/img/uncheckedBox.png'),
+                                choices: ["A", "Б", "В", "Г", "Д"],
+                                answer: "А"
+                            },
+                            {
+                                type: "answer",
+                                question: "Скільки буде 15/512",
+                                image: require('../../ui/assets/img/uncheckedBox.png'),
+                                answer: "Б"
+                            },
+                        ],
+
+                    },
+
+                ]
+
+
+            }
+        ]
+    }
     static navigationOptions = {
         title: 'Обери предмет',
         headerStyle: {
@@ -27,7 +77,7 @@ class HomeScreen extends Component {
         return (
             <ScrollView style={styles.container}>
                 {/* <Text style={styles.h1}>Предмети</Text> */}
-                <SubjectList navigation={this.props.navigation} />
+                <SubjectList subjects={this.state.subjects} navigation={this.props.navigation} />
             </ScrollView>
         )
     }

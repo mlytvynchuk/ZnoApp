@@ -5,71 +5,12 @@ import SubjectTest from '../components/SubjectTest';
 
 class SubjectDetailScreen extends Component {
     state = {
-        name: this.props.navigation.getParam('name'),
-        tests: [
-            {
-                name: "Зно з математики 2018",
-                questions: [
-                    {
-                        type: "choice",
-                        question: "Скільки буде 5+5",
-                        choice1: "3",
-                        choice2: "8",
-                        choice3: "10",
-                        choice4: "5",
-                        answer: 3
-                    },
-                    {
-                        type: "choice",
-                        question: "Скільки буде 7+5",
-                        choice1: "3",
-                        choice2: "11",
-                        choice3: "10",
-                        choice4: "12",
-                        answer: 4
-                    },
-                    {
-                        type: "choice",
-                        question: "Скільки буде 8+5",
-                        choice1: "3",
-                        choice2: "11",
-                        choice3: "13",
-                        choice4: "12",
-                        answer: 3
-                    },
-                ]
-
-            },
-            {
-                name: "Зно з математики 2019",
-                questions: [
-                    {
-                        type: "choice",
-                        question: "Скільки буде 5+5",
-                        choice1: "3",
-                        choice2: "11",
-                        choice3: "10",
-                        choice4: "12",
-                        answer: 3
-                    },
-                    {
-                        type: "choice",
-                        question: "Скільки буде 7+5",
-                        choice1: "3",
-                        choice2: "11",
-                        choice3: "10",
-                        choice4: "12",
-                        answer: 4
-                    }
-                ]
-
-            },
-
-        ]
+        subject: this.props.navigation.getParam('subject'),
+        tests: this.props.navigation.getParam('tests')
     }
     static navigationOptions = ({ navigation }) => {
         return {
-            title: navigation.getParam('name'),
+            title: navigation.getParam('subject').name,
             headerStyle: {
                 // backgroundColor: '#f4511e',
                 // backgroundColor: '#f7f7f7',
@@ -93,7 +34,7 @@ class SubjectDetailScreen extends Component {
     render() {
         return (
             <ScrollView style={styles.container}>
-                {this.state.tests.map((item, index) => (
+                {this.state.subject.tests.map((item, index) => (
                     <TouchableOpacity key={index} style={styles.list}
                         onPress={() => this.props.navigation.navigate(
                             "SubjectTest",

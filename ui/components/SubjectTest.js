@@ -1,230 +1,147 @@
 import React, { Component } from 'react'
-import { Text, TouchableOpacity, StyleSheet, View, Alert, Image } from 'react-native'
+import { Text, View, ScrollView, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
 import CheckBox from 'react-native-check-box'
-class SubjectTest extends Component {
+export class SubjectTest extends Component {
     state = {
-        name: this.props.name,
-        questions: this.props.questions,
-        currentQuestionIndex: 0,
-        currentChoiceIndex: null,
+        name: this.props.navigation.getParam('name'),
+        questions: this.props.navigation.getParam('questions'),
         currentQuestion: {},
+        isChecked: [],
         answers: [],
-        choices: [],
         isChecked: false,
+        currentQuestionIndex: 0
     }
+
+
     componentDidMount() {
-        let currentQuestion = {};
-        let acceptingAnswers = true;
-        let score = 0;
-        let questionCounter = 0;
-        let questions = [...this.state.questions];
-        let answers = [];
-        let choices = [];
-        correctAnswer = null;
-        startGame = () => {
-            questionCounter = 0;
-            score = 0;
-            getQuestionByIndex(0);
-        }
-
-        handleChoice = (value, choice) => {
-            const { currentQuestionIndex } = this.state;
-            answers[currentQuestionIndex] = value;
-            choices[currentQuestionIndex] = choice;
+        getQuestionById = (index) => {
+            const { questions } = this.state;
             this.setState({
-                ...this.state,
-                answers: answers,
-                choices: choices,
-                currentChoiceIndex: choice
-            })
-
-        }
-        getQuestionByIndex = (index) => {
-            questionCounter = index;
-            currentQuestion = questions[index];
-            this.setState({
-                ...this.state,
-                currentQuestion: currentQuestion,
+                currentQuestion: questions[index],
                 currentQuestionIndex: index
             })
         }
-        getChecked = (index) => {
-            if (choices[this.state.currentQuestionIndex] === index) {
-                return styles.checked;
-            }
-        }
-        startGame();
-        onQuestion = (index) => {
-            if (this.state.currentQuestionIndex === index) {
-                return styles.onQuestion;
-            }
-            else if (this.state.answers[index] != null) {
-                return styles.isDone;
-            }
-        }
-
-        calculateResult = () => {
-            let score = 0;
-            this.state.questions.map((question, index) => {
-                if (question.answer == this.state.choices[index]) {
-                    score += 1;
-                }
-            })
-            Alert.alert("Результат: " + score + " / " + questions.length);
-        }
+        getQuestionById(0);
     }
+
+
     render() {
-        const { currentQuestion, currentQuestionIndex } = this.state;
-        const NextQuestion = (
-            <TouchableOpacity onPress={() => getQuestionByIndex(currentQuestionIndex + 1)}>
-                <Text style={styles.nextQuestion}>Наступне питання</Text>
-            </TouchableOpacity>
+        const { currentQuestion, name, questions, currentQuestionIndex } = this.state;
+        const questionsList = (
+            <ScrollView horizontal style={styles.questionsList}>
+                {this.state.questions && this.state.questions.map((item, index) => (
+                    <TouchableOpacity key={index} style={styles.questionListItem} onPress={() => getQuestionById(index)} >
+                        <Text style={{ color: "#fff", fontWeight: "500", fontSize: 15 }}>{index + 1}</Text>
+                    </TouchableOpacity>
+                ))}
+            </ScrollView>
         )
-        const Result = (
-            <TouchableOpacity onPress={() => calculateResult()}>
-                <Text style={styles.result}>Завершити тест</Text>
-            </TouchableOpacity>
-        )
-        const NextOrResult = currentQuestionIndex < this.state.questions.length - 1 ? NextQuestion : Result
-        if (currentQuestion.type === 'choice')
-            return (
-                <View>
-                    <View style={{ display: "flex", flexDirection: "row" }}>
-                        {this.state.questions.map((item, index) => (
-                            <TouchableOpacity key={index} onPress={(ind) => getQuestionByIndex(index)}>
-                                <Text style={{ ...styles.questionBox, ...onQuestion(index) }}> {index + 1}</Text>
-                            </TouchableOpacity>
-                        ))}
-                    </View>
-                    <View style={{ display: "flex", flexDirection: "row" }}>
-                        <View>
-                            <CheckBox
-                                style={{ padding: 10 }}
-                                onClick={() => {
-                                    this.setState({
-                                        isChecked: !this.state.isChecked
-                                    })
-                                }}
-                                isChecked={this.state.isChecked}
-                                checkedImage={<Image source={require('../assets/img/checkedBox.png')} />}
-                                unCheckedImage={<Image source={require('../assets/img/uncheckedBox.png')} />}
-                            />
-                        </View>
+        const choiceList = (
+            <View style={styles.choicesList}>
+                {this.state.currentQuestion.choices && this.state.currentQuestion.choices.map((item, index) => (
+                    <TouchableOpacity key={index} style={styles.checkBoxContainer}>
                         <CheckBox
-                            style={{ padding: 10 }}
+                            style={{ flex: 1, padding: 10 }}
                             onClick={() => {
                                 this.setState({
                                     isChecked: !this.state.isChecked
                                 })
                             }}
                             isChecked={this.state.isChecked}
-                            checkedImage={<Image source={require('../assets/img/checkedBox.png')} />}
-                            unCheckedImage={<Image source={require('../assets/img/uncheckedBox.png')} />}
+                        //checkedImage={<Image source={require('../../page/my/img/ic_check_box.png')} style={this.props.theme.styles.tabBarSelectedIcon} />}
+                        //unCheckedImage={<Image source={require('../../page/my/img/ic_check_box_outline_blank.png')} style={this.props.theme.styles.tabBarSelectedIcon} />}
                         />
-                    </View>
-                    <Text style={styles.h2}> {currentQuestion.question}</Text>
-                    <TouchableOpacity onPress={(value) => handleChoice(currentQuestion.choice1, 1)} style={{ ...styles.choiceContainer, ...getChecked(1) }}>
-                        <Text style={styles.choicePrefix}>A</Text>
-                        <Text style={styles.choiceText} data-number="1">{currentQuestion.choice1}</Text>
+                        <Text>{item}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={(value) => handleChoice(currentQuestion.choice2, 2)} style={{ ...styles.choiceContainer, ...getChecked(2) }}>
-                        <Text style={styles.choicePrefix}>Б</Text>
-                        <Text style={styles.choiceText} data-number="2">{currentQuestion.choice2}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={(value) => handleChoice(currentQuestion.choice3, 3)} style={{ ...styles.choiceContainer, ...getChecked(3) }}>
-                        <Text style={styles.choicePrefix}>В</Text>
-                        <Text style={styles.choiceText} data-number="3">{currentQuestion.choice3}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={(value) => handleChoice(currentQuestion.choice4, 4)} style={{ ...styles.choiceContainer, ...getChecked(4) }}>
-                        <Text style={styles.choicePrefix}>Г</Text>
-                        <Text style={styles.choiceText} data-number="4">{currentQuestion.choice4}</Text>
-                    </TouchableOpacity>
-                    <Text>Answers</Text>
+                ))}
+            </View>
+        )
+        const answerInput = (
+            <View>
+                <TouchableOpacity>
+                    <TextInput style={styles.answerInput} placeholder="Введіть відповідь" />
+                </TouchableOpacity>
+            </View>
+        )
+        const answerArea = currentQuestion.type == "choices" ? choiceList : answerInput;
+        const prevQuestion = currentQuestionIndex > 0 ? (
 
-                    {
-                        this.state.answers.map((item, index) => (
-                            <Text key={index}> {item}</Text>
-                        ))
-                    }
-                    {NextOrResult}
+            <TouchableOpacity onPress={() => getQuestionById(currentQuestionIndex - 1)}>
+                <Text>Попереднє питання</Text>
+            </TouchableOpacity>
+        ) : null;
+        const nextQuestion = (
+            <View>
+                {prevQuestion}
+                <TouchableOpacity onPress={() => getQuestionById(currentQuestionIndex + 1)}>
+                    <Text>Наступне запитання</Text>
+                </TouchableOpacity>
+            </View>
+        )
+
+        const nextResult = (
+            <View>
+                {prevQuestion}
+                <TouchableOpacity>
+                    <Text>Завершити роботу</Text>
+                </TouchableOpacity>
+            </View>
+        )
+        const next = currentQuestionIndex == questions.length - 1 ? nextResult : nextQuestion;
+        return (
+            <View style={{ marginTop: 40 }}>
+                {questionsList}
+                <View style={styles.quizContainer}>
+                    <Text style={styles.title}>{currentQuestion.question}</Text>
                 </View >
-            )
-        else {
-            return null;
-        }
+                <View>
+                    {answerArea}
+                    {next}
+                </View>
+            </View>
+        )
     }
 }
+
 const styles = StyleSheet.create({
-    h2: {
-        fontSize: 25,
-        marginBottom: 20,
-        fontWeight: "bold",
-        textAlign: "left",
-        width: "100%"
+    quizContainer: {
+        marginTop: 10,
+        alignItems: "center"
     },
-    choiceContainer: {
+    title: {
+        fontSize: 25,
+        fontWeight: "400",
+    },
+    questionsList: {
         display: "flex",
         flexDirection: "row",
-        marginBottom: 23,
-        // width: "100%",
-        borderWidth: 2,
-        borderColor: "#f7f7f7",
-        backgroundColor: "white"
     },
-    choicePrefix: {
-        padding: 15,
-        backgroundColor: "#56a5eb",
-        color: "#fff"
-    },
-    choiceText: {
-        marginLeft: 10,
-        fontSize: 15,
-        padding: 15,
-        // width: "100%",
-    },
-    questionBox: {
-        backgroundColor: "white",
-        paddingTop: 8,
-        paddingLeft: 6,
-        paddingRight: 10,
-        paddingBottom: 8,
-        marginRight: 8,
-        color: "#56a5eb",
-        fontSize: 18,
-        borderColor: "#56a5eb",
-        borderWidth: 2
-    },
-    nextQuestion: {
-        color: "#56a5eb",
-        fontSize: 20,
-        paddingTop: 15,
-        fontWeight: "400"
-    },
-    result: {
-        color: "red",
-        fontSize: 20,
-        paddingTop: 15,
-        fontWeight: "400"
-    },
-    checked: {
-        backgroundColor: "#f7f7f7"
-    },
-    onQuestion: {
-        opacity: 0.6
-    },
-    isDone: {
-        backgroundColor: "#56a5eb",
-        paddingTop: 8,
-        paddingLeft: 6,
-        paddingRight: 10,
-        paddingBottom: 8,
-        marginRight: 8,
+    questionListItem: {
         color: "white",
-        fontSize: 18
+        marginRight: 5,
+        fontSize: 15,
+        fontWeight: "400",
+        padding: 8,
+        paddingLeft: 12,
+        paddingRight: 12,
+        backgroundColor: "grey",
+        borderRadius: 7,
     },
-    checkbox: {
-        padding: 10
+    checkBoxContainer: {
+        display: "flex",
+        flexDirection: "column-reverse",
+        alignItems: "center"
+    },
+    choicesList: {
+        marginTop: 20,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+    },
+    answerInput: {
+        backgroundColor: "#f7f7f7",
+        textAlign: "center",
+        height: 50
     }
-
-});
-export default SubjectTest;
+})
+export default SubjectTest

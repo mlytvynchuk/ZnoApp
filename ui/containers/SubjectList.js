@@ -2,38 +2,13 @@ import React, { Component } from 'react'
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 class SubjectList extends Component {
     state = {
-        subjects: [
-            {
-                id: 1,
-                name: "Математика"
-            },
-            {
-                id: 2,
-                name: "Українська мова"
-            },
-            {
-                id: 3,
-                name: "Англійська мова"
-            },
-            {
-                id: 4,
-                name: "Історія України"
-            },
-            {
-                id: 5,
-                name: "Біологія"
-            },
-            {
-                id: 6,
-                name: "Хімія"
-            },
-        ]
+        subjects: this.props.subjects
     }
     render() {
         return (
             <View>
-                {this.state.subjects.map((item, index) => (
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("SubjectDetail", { name: item.name })} key={index} style={stylesList.container} >
+                {this.state.subjects && this.state.subjects.map((item, index) => (
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("SubjectDetail", { subject: item })} key={index} style={stylesList.container} >
                         <Text style={stylesList.text}>
                             {item.name}
                         </Text>
