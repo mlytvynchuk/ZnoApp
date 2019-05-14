@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Text, TouchableOpacity, StyleSheet, View, Alert } from 'react-native'
+import { Text, TouchableOpacity, StyleSheet, View, Alert, Image } from 'react-native'
+import CheckBox from 'react-native-check-box'
 class SubjectTest extends Component {
     state = {
         name: this.props.name,
@@ -8,7 +9,8 @@ class SubjectTest extends Component {
         currentChoiceIndex: null,
         currentQuestion: {},
         answers: [],
-        choices: []
+        choices: [],
+        isChecked: false,
     }
     componentDidMount() {
         let currentQuestion = {};
@@ -94,6 +96,32 @@ class SubjectTest extends Component {
                             </TouchableOpacity>
                         ))}
                     </View>
+                    <View style={{ display: "flex", flexDirection: "row" }}>
+                        <View>
+                            <CheckBox
+                                style={{ padding: 10 }}
+                                onClick={() => {
+                                    this.setState({
+                                        isChecked: !this.state.isChecked
+                                    })
+                                }}
+                                isChecked={this.state.isChecked}
+                                checkedImage={<Image source={require('../assets/img/checkedBox.png')} />}
+                                unCheckedImage={<Image source={require('../assets/img/uncheckedBox.png')} />}
+                            />
+                        </View>
+                        <CheckBox
+                            style={{ padding: 10 }}
+                            onClick={() => {
+                                this.setState({
+                                    isChecked: !this.state.isChecked
+                                })
+                            }}
+                            isChecked={this.state.isChecked}
+                            checkedImage={<Image source={require('../assets/img/checkedBox.png')} />}
+                            unCheckedImage={<Image source={require('../assets/img/uncheckedBox.png')} />}
+                        />
+                    </View>
                     <Text style={styles.h2}> {currentQuestion.question}</Text>
                     <TouchableOpacity onPress={(value) => handleChoice(currentQuestion.choice1, 1)} style={{ ...styles.choiceContainer, ...getChecked(1) }}>
                         <Text style={styles.choicePrefix}>A</Text>
@@ -112,6 +140,7 @@ class SubjectTest extends Component {
                         <Text style={styles.choiceText} data-number="4">{currentQuestion.choice4}</Text>
                     </TouchableOpacity>
                     <Text>Answers</Text>
+
                     {
                         this.state.answers.map((item, index) => (
                             <Text key={index}> {item}</Text>
@@ -192,6 +221,9 @@ const styles = StyleSheet.create({
         marginRight: 8,
         color: "white",
         fontSize: 18
+    },
+    checkbox: {
+        padding: 10
     }
 
 });

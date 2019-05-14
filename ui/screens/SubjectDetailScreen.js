@@ -69,10 +69,24 @@ class SubjectDetailScreen extends Component {
     }
     static navigationOptions = ({ navigation }) => {
         return {
-            headerTitle: (<Text style={styles.h1}>{navigation.getParam('name')}</Text>),
-            // headerLeft: (
-            //     <Text style={styles.BackButton} onPress={() => navigation.goBack()}>{"<"}</Text>
-            // ),
+            title: navigation.getParam('name'),
+            headerStyle: {
+                // backgroundColor: '#f4511e',
+                // backgroundColor: '#f7f7f7',
+                marginTop: 25,
+                borderBottom: "none",
+                shadowColor: "transperent",
+                shadowRadius: 0,
+                shadowOffset: {
+                    height: 0,
+                },
+
+            },
+            headerTitleStyle: {
+                fontWeight: 'bold',
+                fontSize: 25,
+                paddingBottom: 10,
+            },
         }
     };
 
