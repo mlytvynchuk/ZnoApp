@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { Text, View, ScrollView, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
 import CheckBox from 'react-native-check-box'
+import update from 'react-addons-update'
 export class SubjectTest extends Component {
     state = {
         name: this.props.navigation.getParam('name'),
         questions: this.props.navigation.getParam('questions'),
         currentQuestion: {},
-        isChecked: [],
+        isChecked: [false, false, false, false, false, false, false],
         answers: [],
-        isChecked: false,
         currentQuestionIndex: 0
     }
 
@@ -22,6 +22,14 @@ export class SubjectTest extends Component {
             })
         }
         getQuestionById(0);
+    }
+    handleCheckBox = (index) => {
+        const { currentQuestionIndex } = this.state;
+        alert(index);
+        this.setState({
+            isChecked: update(this.state.isChecked[index], { $set: [true] })
+        })
+
     }
 
 
@@ -42,12 +50,9 @@ export class SubjectTest extends Component {
                     <TouchableOpacity key={index} style={styles.checkBoxContainer}>
                         <CheckBox
                             style={{ flex: 1, padding: 10 }}
-                            onClick={() => {
-                                this.setState({
-                                    isChecked: !this.state.isChecked
-                                })
-                            }}
-                            isChecked={this.state.isChecked}
+                            onClick={() => this.handleCheckBox(index)
+                            }
+                            isChecked={this.state.isChecked[index]}
                         //checkedImage={<Image source={require('../../page/my/img/ic_check_box.png')} style={this.props.theme.styles.tabBarSelectedIcon} />}
                         //unCheckedImage={<Image source={require('../../page/my/img/ic_check_box_outline_blank.png')} style={this.props.theme.styles.tabBarSelectedIcon} />}
                         />
