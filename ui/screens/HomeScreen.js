@@ -20,6 +20,14 @@ class HomeScreen extends Component {
                                 value: 5
                             },
                             {
+                                type: "choices",
+                                question: "Скільки буде 15+5",
+                                image: require('../../ui/assets/img/uncheckedBox.png'),
+                                choices: ["A", "Б", "В", "Г", "Д"],
+                                answer: "А",
+                                value: 5
+                            },
+                            {
                                 type: "answer",
                                 question: "Скільки буде 15/5",
                                 image: require('../../ui/assets/img/uncheckedBox.png'),

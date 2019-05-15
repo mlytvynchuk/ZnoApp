@@ -2,18 +2,27 @@ import React, { Component } from 'react'
 import { Text, View, ScrollView, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
 import CheckBox from 'react-native-check-box'
 import update from 'react-addons-update'
+import ReactStopwatch from 'react-stopwatch'
 export class SubjectTest extends Component {
     state = {
         name: this.props.navigation.getParam('name'),
         questions: this.props.navigation.getParam('questions'),
         currentQuestion: {},
-        isChecked: [false, false, false, false, false, false, false],
+        isChecked: [],
         answers: [],
-        currentQuestionIndex: 0
+        currentQuestionIndex: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+
     }
 
 
     componentDidMount() {
+        let checkedArr = []
+        let answers = []
+        choices = []
+        let seconds = 0
         getQuestionById = (index) => {
             const { questions } = this.state;
             this.setState({
@@ -22,15 +31,31 @@ export class SubjectTest extends Component {
             })
         }
         getQuestionById(0);
+        handleCheckBox = (index, answer) => {
+            const { currentQuestionIndex } = this.state;
+            choices[currentQuestionIndex] = index;
+            answers[currentQuestionIndex] = answer;
+            this.setState({
+                isChecked: choices,
+                answers: answers
+            })
+        }
+        isChecked = (index) => {
+            const { currentQuestionIndex } = this.state;
+            if (index === this.state.isChecked[currentQuestionIndex]) {
+                return true;
+            }
+            return false;
+        }
+        handleAnswerInput = (index, answer) => {
+            answers[index] = answer;
+            // alert(answer);
+            this.setState({
+                answers: answers
+            })
+        }
     }
-    handleCheckBox = (index) => {
-        const { currentQuestionIndex } = this.state;
-        alert(index);
-        this.setState({
-            isChecked: update(this.state.isChecked[index], { $set: [true] })
-        })
 
-    }
 
 
     render() {
@@ -50,9 +75,9 @@ export class SubjectTest extends Component {
                     <TouchableOpacity key={index} style={styles.checkBoxContainer}>
                         <CheckBox
                             style={{ flex: 1, padding: 10 }}
-                            onClick={() => this.handleCheckBox(index)
+                            onClick={() => handleCheckBox(index, item)
                             }
-                            isChecked={this.state.isChecked[index]}
+                            isChecked={isChecked(index)}
                         //checkedImage={<Image source={require('../../page/my/img/ic_check_box.png')} style={this.props.theme.styles.tabBarSelectedIcon} />}
                         //unCheckedImage={<Image source={require('../../page/my/img/ic_check_box_outline_blank.png')} style={this.props.theme.styles.tabBarSelectedIcon} />}
                         />
@@ -64,7 +89,7 @@ export class SubjectTest extends Component {
         const answerInput = (
             <View>
                 <TouchableOpacity>
-                    <TextInput style={styles.answerInput} placeholder="Введіть відповідь" />
+                    <TextInput style={styles.answerInput} placeholder="Введіть відповідь" onChangeText={(value) => handleAnswerInput(currentQuestionIndex, value)} value={this.state.answers[currentQuestionIndex]} />
                 </TouchableOpacity>
             </View>
         )
@@ -95,6 +120,25 @@ export class SubjectTest extends Component {
         const next = currentQuestionIndex == questions.length - 1 ? nextResult : nextQuestion;
         return (
             <View style={{ marginTop: 40 }}>
+                <ReactStopwatch
+                    seconds={0}
+                    minutes={0}
+                    hours={0}
+                    limit="00:00:10"
+                    onChange={({ hours, minutes, seconds }) => {
+                        // do something
+                    }}
+                    onCallback={() => alert('Finish')}
+                    render={({ formatted, hours, minutes, seconds }) => {
+                        return (
+                            <View>
+                                <Text>
+                                    {formatted}
+                                </Text>
+                            </View>
+                        );
+                    }}
+                />
                 {questionsList}
                 <View style={styles.quizContainer}>
                     <Text style={styles.title}>{currentQuestion.question}</Text>
