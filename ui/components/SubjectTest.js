@@ -1,8 +1,14 @@
-import React, { Component } from 'react'
+import React, {
+    Component,
+    PanResponder,
+    Animated,
+    Dimensions
+} from 'react'
 import { Text, View, ScrollView, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
 import CheckBox from 'react-native-check-box'
 import update from 'react-addons-update'
 import ReactStopwatch from 'react-stopwatch'
+import Draggable from './Draggable'
 export class SubjectTest extends Component {
     state = {
         name: this.props.navigation.getParam('name'),
@@ -19,6 +25,7 @@ export class SubjectTest extends Component {
 
 
     componentDidMount() {
+        let result = 0
         let checkedArr = []
         let answers = []
         choices = []
@@ -35,6 +42,7 @@ export class SubjectTest extends Component {
             const { currentQuestionIndex } = this.state;
             choices[currentQuestionIndex] = index;
             answers[currentQuestionIndex] = answer;
+            // alert(answer)
             this.setState({
                 isChecked: choices,
                 answers: answers
@@ -54,6 +62,23 @@ export class SubjectTest extends Component {
                 answers: answers
             })
         }
+        calculateResult = () => {
+            const { answers, questions } = this.state;
+            let answArr = [];
+            let res = 0;
+            for (var i = 0; i < questions.length; i++) {
+                // let question = questions[i];
+
+                // if (answers[i] === question.answer) {
+                //     result += question.value;
+                // }
+                if (answers[i] == this.state.questions[i].answer) {
+                    res += this.state.questions[i].value
+                }
+            }
+            alert(res);
+            result = 0;
+        }
     }
 
 
@@ -64,10 +89,38 @@ export class SubjectTest extends Component {
             <ScrollView horizontal style={styles.questionsList}>
                 {this.state.questions && this.state.questions.map((item, index) => (
                     <TouchableOpacity key={index} style={styles.questionListItem} onPress={() => getQuestionById(index)} >
-                        <Text style={{ color: "#fff", fontWeight: "500", fontSize: 15 }}>{index + 1}</Text>
+                        <Text style={{ fontWeight: "500", fontSize: 15 }}>{index + 1}</Text>
                     </TouchableOpacity>
                 ))}
             </ScrollView>
+        )
+        const multipleChoiceList = (
+            <View>
+                <View style={styles.choicesBoxContainer}>
+                    {this.state.currentQuestion.choices && this.state.currentQuestion.choices.map((item, index) => (
+                        <View key={index} style={styles.choicesBoxContainer}>
+                            <Text style={{ marginRight: 5 }}>
+                                {index + 1}
+                            </Text>
+                            <View style={styles.choicesBox}>
+                            </View>
+                        </View>
+
+                    ))}
+                    <Draggable />
+                </View>
+                <View style={{ ...styles.choicesBoxContainer, marginTop: 20 }}>
+                    {this.state.currentQuestion.choices && this.state.currentQuestion.choices.map((item, index) => (
+                        <View style={{ marginRight: 15 }} key={index} style={styles.questionListItem} >
+                            <Text>
+                                {item}
+                            </Text>
+                        </View>
+                    ))}
+                </View>
+
+
+            </View>
         )
         const choiceList = (
             <View style={styles.choicesList}>
@@ -93,7 +146,7 @@ export class SubjectTest extends Component {
                 </TouchableOpacity>
             </View>
         )
-        const answerArea = currentQuestion.type == "choices" ? choiceList : answerInput;
+        const answerArea = currentQuestion.type == "choices" ? multipleChoiceList : answerInput;
         const prevQuestion = currentQuestionIndex > 0 ? (
 
             <TouchableOpacity onPress={() => getQuestionById(currentQuestionIndex - 1)}>
@@ -112,7 +165,7 @@ export class SubjectTest extends Component {
         const nextResult = (
             <View>
                 {prevQuestion}
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => calculateResult()}>
                     <Text>Завершити роботу</Text>
                 </TouchableOpacity>
             </View>
@@ -166,14 +219,13 @@ const styles = StyleSheet.create({
         flexDirection: "row",
     },
     questionListItem: {
-        color: "white",
         marginRight: 5,
         fontSize: 15,
         fontWeight: "400",
         padding: 8,
         paddingLeft: 12,
         paddingRight: 12,
-        backgroundColor: "grey",
+        backgroundColor: "#f1f1f1",
         borderRadius: 7,
     },
     checkBoxContainer: {
@@ -188,9 +240,21 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     answerInput: {
-        backgroundColor: "#f7f7f7",
+        backgroundColor: "#f1f1f1",
         textAlign: "center",
         height: 50
+    },
+    choicesBox: {
+        padding: 15,
+        backgroundColor: "#f7f7f7",
+        borderRadius: 7,
+    },
+    choicesBoxContainer: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        marginRight: 20,
+        marginTop: 10
     }
 })
 export default SubjectTest

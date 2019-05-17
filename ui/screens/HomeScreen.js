@@ -15,7 +15,7 @@ class HomeScreen extends Component {
                                 type: "choices",
                                 question: "Скільки буде 5+5",
                                 image: require('../../ui/assets/img/uncheckedBox.png'),
-                                choices: ["A", "Б", "В", "Г", "Д"],
+                                choices: ["А", "Б", "В", "Г", "Д"],
                                 answer: "А",
                                 value: 5
                             },
@@ -23,7 +23,7 @@ class HomeScreen extends Component {
                                 type: "choices",
                                 question: "Скільки буде 15+5",
                                 image: require('../../ui/assets/img/uncheckedBox.png'),
-                                choices: ["A", "Б", "В", "Г", "Д"],
+                                choices: ["А", "Б", "В", "Г", "Д"],
                                 answer: "А",
                                 value: 5
                             },
@@ -31,7 +31,7 @@ class HomeScreen extends Component {
                                 type: "answer",
                                 question: "Скільки буде 15/5",
                                 image: require('../../ui/assets/img/uncheckedBox.png'),
-                                answer: "Б",
+                                answer: "А",
                                 value: 5
                             },
                         ],
