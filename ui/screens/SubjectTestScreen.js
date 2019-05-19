@@ -22,7 +22,7 @@ export class SubjectTestScreen extends Component {
 }
 const styles = StyleSheet.create({
     container: {
-        padding: 25
+        padding: 20,
     },
 })
 

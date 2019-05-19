@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
+import { Text, View, TouchableOpacity, StyleSheet, Image } from 'react-native'
 class SubjectList extends Component {
     state = {
         subjects: this.props.subjects
@@ -9,6 +9,7 @@ class SubjectList extends Component {
             <View>
                 {this.state.subjects && this.state.subjects.map((item, index) => (
                     <TouchableOpacity onPress={() => this.props.navigation.navigate("SubjectDetail", { subject: item })} key={index} style={stylesList.container} >
+                        <Image source={item.image} style={{ width: 40, height: 40 }} />
                         <Text style={stylesList.text}>
                             {item.name}
                         </Text>
@@ -23,7 +24,10 @@ export default SubjectList;
 
 const stylesList = StyleSheet.create({
     container: {
-        padding: 30,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        padding: 20,
         marginTop: 15,
         backgroundColor: '#ffff',
         borderRadius: 20,
@@ -40,6 +44,7 @@ const stylesList = StyleSheet.create({
     text: {
         // color: '#4f603c',
         fontWeight: "500",
-        fontSize: 15,
+        fontSize: 16,
+        marginLeft: 10
     }
 })

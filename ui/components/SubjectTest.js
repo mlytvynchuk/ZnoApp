@@ -1,14 +1,14 @@
 import React, {
     Component,
     PanResponder,
-    Animated,
-    Dimensions
+    Animated
 } from 'react'
-import { Text, View, ScrollView, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
+import { Text, View, ScrollView, StyleSheet, TouchableOpacity, TextInput, Image, Dimensions } from 'react-native'
 import CheckBox from 'react-native-check-box'
 import update from 'react-addons-update'
-import ReactStopwatch from 'react-stopwatch'
-import Draggable from './Draggable'
+import Lightbox from 'react-native-lightbox'
+
+
 export class SubjectTest extends Component {
     state = {
         name: this.props.navigation.getParam('name'),
@@ -89,33 +89,38 @@ export class SubjectTest extends Component {
             <ScrollView horizontal style={styles.questionsList}>
                 {this.state.questions && this.state.questions.map((item, index) => (
                     <TouchableOpacity key={index} style={styles.questionListItem} onPress={() => getQuestionById(index)} >
-                        <Text style={{ fontWeight: "500", fontSize: 15 }}>{index + 1}</Text>
+                        <Text style={{ fontWeight: "500", fontSize: 15, color: "#fff" }}>{index + 1}</Text>
                     </TouchableOpacity>
                 ))}
             </ScrollView>
         )
+        const brBlock = (index) => {
+            if (index > 1 && index % 2 == 0) {
+                return (
+                    <Text>{"\n"}</Text>
+                )
+            }
+        }
+        const LightboxView = ({ navigator }) => (
+            <Lightbox navigator={navigator}>
+                {imageQuestion}
+            </Lightbox>
+        );
         const multipleChoiceList = (
             <View>
                 <View style={styles.choicesBoxContainer}>
                     {this.state.currentQuestion.choices && this.state.currentQuestion.choices.map((item, index) => (
                         <View key={index} style={styles.choicesBoxContainer}>
-                            <Text style={{ marginRight: 5 }}>
+                            <Text style={{ marginRight: 5, fontWeight: "500" }}>
                                 {index + 1}
                             </Text>
                             <View style={styles.choicesBox}>
+                                <TextInput width="100%" maxLength={1} fontWeight="500" fontSize="15" />
+
                             </View>
+                            {brBlock(index + 1)}
                         </View>
 
-                    ))}
-                    <Draggable />
-                </View>
-                <View style={{ ...styles.choicesBoxContainer, marginTop: 20 }}>
-                    {this.state.currentQuestion.choices && this.state.currentQuestion.choices.map((item, index) => (
-                        <View style={{ marginRight: 15 }} key={index} style={styles.questionListItem} >
-                            <Text>
-                                {item}
-                            </Text>
-                        </View>
                     ))}
                 </View>
 
@@ -127,14 +132,16 @@ export class SubjectTest extends Component {
                 {this.state.currentQuestion.choices && this.state.currentQuestion.choices.map((item, index) => (
                     <TouchableOpacity key={index} style={styles.checkBoxContainer}>
                         <CheckBox
-                            style={{ flex: 1, padding: 10 }}
+                            style={{ flex: 1 }}
                             onClick={() => handleCheckBox(index, item)
                             }
                             isChecked={isChecked(index)}
-                        //checkedImage={<Image source={require('../../page/my/img/ic_check_box.png')} style={this.props.theme.styles.tabBarSelectedIcon} />}
+                            checkedImage={<Image source={require('../assets/img/checkbox/checked.png')} style={{ width: 35, height: 35 }} />}
+                            unCheckedImage={<Image source={require('../assets/img/checkbox/unchecked.png')} style={{ width: 35, height: 35 }} />}
+
                         //unCheckedImage={<Image source={require('../../page/my/img/ic_check_box_outline_blank.png')} style={this.props.theme.styles.tabBarSelectedIcon} />}
                         />
-                        <Text>{item}</Text>
+                        <Text style={{ fontSize: 15, fontWeight: "400" }}>{item}</Text>
                     </TouchableOpacity>
                 ))}
             </View>
@@ -146,66 +153,68 @@ export class SubjectTest extends Component {
                 </TouchableOpacity>
             </View>
         )
-        const answerArea = currentQuestion.type == "choices" ? multipleChoiceList : answerInput;
+        const answerArea = currentQuestion.type == "answer" ? answerInput : currentQuestion.type == "choices" ? choiceList : multipleChoiceList;
         const prevQuestion = currentQuestionIndex > 0 ? (
 
             <TouchableOpacity onPress={() => getQuestionById(currentQuestionIndex - 1)}>
-                <Text>Попереднє питання</Text>
+                <Text style={styles.prevQuestionText}>Попереднє питання</Text>
             </TouchableOpacity>
         ) : null;
         const nextQuestion = (
-            <View>
+            <View style={styles.nextContainer}>
                 {prevQuestion}
                 <TouchableOpacity onPress={() => getQuestionById(currentQuestionIndex + 1)}>
-                    <Text>Наступне запитання</Text>
+                    <Text style={styles.nextText}>Наступне запитання</Text>
                 </TouchableOpacity>
             </View>
         )
 
         const nextResult = (
-            <View>
+            <View style={styles.nextContainer}>
                 {prevQuestion}
                 <TouchableOpacity onPress={() => calculateResult()}>
-                    <Text>Завершити роботу</Text>
+                    <Text style={styles.nextResultText}>Завершити роботу</Text>
                 </TouchableOpacity>
+            </View>
+        )
+        const imageQuestion = (
+            <View>
+                <Image source={currentQuestion.image} style={styles.imageQuestion} resizeMode={'center'} resizeMethod={'resize'} />
             </View>
         )
         const next = currentQuestionIndex == questions.length - 1 ? nextResult : nextQuestion;
         return (
-            <View style={{ marginTop: 40 }}>
-                <ReactStopwatch
-                    seconds={0}
-                    minutes={0}
-                    hours={0}
-                    limit="00:00:10"
-                    onChange={({ hours, minutes, seconds }) => {
-                        // do something
-                    }}
-                    onCallback={() => alert('Finish')}
-                    render={({ formatted, hours, minutes, seconds }) => {
-                        return (
-                            <View>
-                                <Text>
-                                    {formatted}
-                                </Text>
-                            </View>
-                        );
-                    }}
-                />
+            <ScrollView>
+                <View style={styles.nextContainer}>
+                    <TouchableOpacity onPress={() => calculateResult()}>
+                        <Text style={styles.nextResultText}>Результат</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => calculateResult()}>
+                        <Text>0:00:00</Text>
+                    </TouchableOpacity>
+                </View>
                 {questionsList}
-                <View style={styles.quizContainer}>
+                < View style={styles.quizContainer}>
+                    <LightboxView />
                     <Text style={styles.title}>{currentQuestion.question}</Text>
                 </View >
                 <View>
                     {answerArea}
+                </View>
+                <View>
                     {next}
                 </View>
-            </View>
+            </ScrollView >
         )
     }
 }
-
+const win = Dimensions.get('window');
 const styles = StyleSheet.create({
+    mainContainer: {
+        backgroundColor: "#FDFFFC",
+        flexDirection: "column",
+        height: "100%"
+    },
     quizContainer: {
         marginTop: 10,
         alignItems: "center"
@@ -225,16 +234,19 @@ const styles = StyleSheet.create({
         padding: 8,
         paddingLeft: 12,
         paddingRight: 12,
-        backgroundColor: "#f1f1f1",
+        backgroundColor: "#17B2D1",
         borderRadius: 7,
+        color: "#fff"
     },
     checkBoxContainer: {
         display: "flex",
         flexDirection: "column-reverse",
-        alignItems: "center"
+        flexWrap: "wrap",
+        alignItems: "center",
+        marginRight: 10
     },
     choicesList: {
-        marginTop: 20,
+
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
@@ -245,16 +257,50 @@ const styles = StyleSheet.create({
         height: 50
     },
     choicesBox: {
-        padding: 15,
+        paddingTop: 10,
+        paddingLeft: 15,
+        paddingRight: 15,
+        paddingBottom: 10,
         backgroundColor: "#f7f7f7",
         borderRadius: 7,
     },
     choicesBoxContainer: {
         display: "flex",
+        flexWrap: "wrap",
         flexDirection: "row",
         alignItems: "center",
         marginRight: 20,
-        marginTop: 10
+        marginTop: 0
+
+    },
+    nextContainer: {
+        marginTop: 40,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "flex-end"
+
+    },
+    nextText: {
+        fontSize: 15,
+        fontWeight: "500",
+        color: "#17B2D1"
+    },
+    nextResultText: {
+        fontSize: 15,
+        fontWeight: "500",
+        color: "#FF0755",
+        paddingBottom: 5
+    },
+    prevQuestionText: {
+        fontSize: 15,
+        fontWeight: "400",
+        color: "#B0B9BF"
+    },
+    imageQuestion: {
+        display: "flex",
+        width: win.width
     }
+
 })
 export default SubjectTest

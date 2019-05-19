@@ -7,22 +7,23 @@ class HomeScreen extends Component {
         subjects: [
             {
                 name: "Математика",
+                image: require('../../ui/assets/img/subIcons/math.png'),
                 tests: [
                     {
                         name: "Тест з математики зно 2017-2018",
                         questions: [
                             {
                                 type: "choices",
-                                question: "Скільки буде 5+5",
-                                image: require('../../ui/assets/img/uncheckedBox.png'),
+                                question: "",
+                                image: require('../../ui/assets/img/tests/math/2019-zno/1.png'),
                                 choices: ["А", "Б", "В", "Г", "Д"],
                                 answer: "А",
                                 value: 5
                             },
                             {
                                 type: "choices",
-                                question: "Скільки буде 15+5",
-                                image: require('../../ui/assets/img/uncheckedBox.png'),
+                                question: "",
+                                image: require('../../ui/assets/img/tests/math/2019-zno/2.png'),
                                 choices: ["А", "Б", "В", "Г", "Д"],
                                 answer: "А",
                                 value: 5
@@ -68,7 +69,7 @@ class HomeScreen extends Component {
         headerStyle: {
             // backgroundColor: '#f4511e',
             // backgroundColor: '#f7f7f7',
-            marginTop: 10,
+            marginTop: 25,
             borderBottom: "none",
             shadowColor: "transperent",
             shadowRadius: 0,
@@ -110,6 +111,7 @@ const styles = StyleSheet.create({
         textAlign: "left",
         width: "100%"
     },
+
 });
 
 export default HomeScreen;
