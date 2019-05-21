@@ -35,6 +35,14 @@ class HomeScreen extends Component {
                                 answer: "А",
                                 value: 5
                             },
+                            {
+                                type: "mchoices",
+                                question: "",
+                                image: require('../../ui/assets/img/tests/math/2019-zno/2.png'),
+                                choices: ["А", "Б", "В", "Г", "Д"],
+                                answer: ["А", "Б", "В", "Г", "Д"],
+                                value: 5
+                            },
                         ],
 
                     },

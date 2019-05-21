@@ -62,6 +62,10 @@ export class SubjectTest extends Component {
                 answers: answers
             })
         }
+        handleMultipleCheckBoxes = (index, value) => {
+            const { currentQuestionIndex, answers } = this.state;
+            answers[currentQuestionIndex][index] = value;
+        }
         calculateResult = () => {
             const { answers, questions } = this.state;
             let answArr = [];
@@ -79,6 +83,7 @@ export class SubjectTest extends Component {
             alert(res);
             result = 0;
         }
+
     }
 
 
@@ -179,7 +184,7 @@ export class SubjectTest extends Component {
         )
         const imageQuestion = (
             <View>
-                <Image source={currentQuestion.image} style={styles.imageQuestion} resizeMode={'center'} resizeMethod={'resize'} />
+                <Image source={currentQuestion.image} style={styles.imageQuestion} resizeMode={'center'} resizeMethod={'resize'} style={{ width: 500 }} />
             </View>
         )
         const next = currentQuestionIndex == questions.length - 1 ? nextResult : nextQuestion;
@@ -194,8 +199,14 @@ export class SubjectTest extends Component {
                     </TouchableOpacity>
                 </View>
                 {questionsList}
+                <View>
+                    <Lightbox>
+                        <ScrollView maximumZoomScale={4} contentContainerStyle={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
+                            {imageQuestion}
+                        </ScrollView>
+                    </Lightbox>
+                </View>
                 < View style={styles.quizContainer}>
-                    <LightboxView />
                     <Text style={styles.title}>{currentQuestion.question}</Text>
                 </View >
                 <View>
