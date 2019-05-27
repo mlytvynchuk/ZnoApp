@@ -23,13 +23,26 @@ export class SubjectTest extends Component {
 
     }
 
-
     componentDidMount() {
         let result = 0
         let checkedArr = []
         let answers = []
         choices = []
         let seconds = 0
+        const { questions } = this.state;
+        for (var i = 0; i < questions.length; i++) {
+            if (questions[i].type != 'mchoices') {
+                answers[i] = "";
+            } else {
+                answers[i] = [];
+                for (var j = 0; j < questions.length; j++) {
+                    answers[i][j] = "";
+                }
+            }
+        }
+        this.setState({
+            answers: answers
+        })
         getQuestionById = (index) => {
             const { questions } = this.state;
             this.setState({
@@ -37,6 +50,7 @@ export class SubjectTest extends Component {
                 currentQuestionIndex: index
             })
         }
+        // starts our quiz:
         getQuestionById(0);
         handleCheckBox = (index, answer) => {
             const { currentQuestionIndex } = this.state;
@@ -55,16 +69,18 @@ export class SubjectTest extends Component {
             }
             return false;
         }
-        handleAnswerInput = (index, answer) => {
-            answers[index] = answer;
+        handleAnswerInput = (answer, index) => {
+            const { currentQuestionIndex } = this.state;
+            if (index != null) {
+                answers[currentQuestionIndex][index] = answer;
+            } else {
+                answers[currentQuestionIndex] = String(answer);
+
+            }
             // alert(answer);
             this.setState({
                 answers: answers
             })
-        }
-        handleMultipleCheckBoxes = (index, value) => {
-            const { currentQuestionIndex, answers } = this.state;
-            answers[currentQuestionIndex][index] = value;
         }
         calculateResult = () => {
             const { answers, questions } = this.state;
@@ -76,9 +92,19 @@ export class SubjectTest extends Component {
                 // if (answers[i] === question.answer) {
                 //     result += question.value;
                 // }
-                if (answers[i] == this.state.questions[i].answer) {
-                    res += this.state.questions[i].value
+                if (questions[i].type == 'choices' || questions[i].type == 'answer') {
+                    if (answers[i] == this.state.questions[i].answer) {
+                        res += this.state.questions[i].value
+                    }
                 }
+                else if (questions[i].type == 'mchoices') {
+                    for (var j = 0; j < questions[i].choices.length; j++) {
+                        if (answers[i][j] && answers[i][j] == questions[i].answer[j]) {
+                            res += questions[i].value / questions[i].choices.length;
+                        }
+                    }
+                }
+
             }
             alert(res);
             result = 0;
@@ -120,8 +146,7 @@ export class SubjectTest extends Component {
                                 {index + 1}
                             </Text>
                             <View style={styles.choicesBox}>
-                                <TextInput width="100%" maxLength={1} fontWeight="500" fontSize="15" />
-
+                                <TextInput width="100%" maxLength={1} fontWeight="500" fontSize="15" onChangeText={(value) => handleAnswerInput(value, index)} value={this.state.answers[currentQuestionIndex][index] && String(this.state.answers[currentQuestionIndex][index])} />
                             </View>
                             {brBlock(index + 1)}
                         </View>
@@ -154,7 +179,7 @@ export class SubjectTest extends Component {
         const answerInput = (
             <View>
                 <TouchableOpacity>
-                    <TextInput style={styles.answerInput} placeholder="Введіть відповідь" onChangeText={(value) => handleAnswerInput(currentQuestionIndex, value)} value={this.state.answers[currentQuestionIndex]} />
+                    <TextInput style={styles.answerInput} placeholder="Введіть відповідь" onChangeText={(value) => handleAnswerInput(value)} value={this.state.answers[currentQuestionIndex] && String(this.state.answers[currentQuestionIndex])} />
                 </TouchableOpacity>
             </View>
         )
@@ -245,7 +270,7 @@ const styles = StyleSheet.create({
         padding: 8,
         paddingLeft: 12,
         paddingRight: 12,
-        backgroundColor: "#17B2D1",
+        backgroundColor: "black",
         borderRadius: 7,
         color: "#fff"
     },
@@ -295,7 +320,7 @@ const styles = StyleSheet.create({
     nextText: {
         fontSize: 15,
         fontWeight: "500",
-        color: "#17B2D1"
+        color: "black"
     },
     nextResultText: {
         fontSize: 15,

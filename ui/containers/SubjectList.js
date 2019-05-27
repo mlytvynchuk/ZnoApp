@@ -9,13 +9,14 @@ class SubjectList extends Component {
             <View>
                 {this.state.subjects && this.state.subjects.map((item, index) => (
                     <TouchableOpacity onPress={() => this.props.navigation.navigate("SubjectDetail", { subject: item })} key={index} style={stylesList.container} >
-                        <Image source={item.image} style={{ width: 40, height: 40 }} />
+                        <Image source={item.image} style={{ width: 40, height: 40, overlayColor: "black" }} />
                         <Text style={stylesList.text}>
                             {item.name}
                         </Text>
                     </TouchableOpacity>
                 )
                 )}
+
             </View>
         )
     }
@@ -29,8 +30,8 @@ const stylesList = StyleSheet.create({
         alignItems: "center",
         padding: 20,
         marginTop: 15,
-        backgroundColor: '#ffff',
-        borderRadius: 20,
+        backgroundColor: '#fff',
+        borderRadius: 15,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -48,3 +49,4 @@ const stylesList = StyleSheet.create({
         marginLeft: 10
     }
 })
+

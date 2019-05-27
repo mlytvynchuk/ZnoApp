@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, ScrollView, View, StyleSheet, TouchableOpacity } from 'react-native'
+import { Text, ScrollView, View, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
 import { Button } from 'react-native-elements';
 import SubjectTest from '../components/SubjectTest';
 
@@ -33,7 +33,7 @@ class SubjectDetailScreen extends Component {
 
     render() {
         return (
-            <ScrollView style={styles.container}>
+            <View style={styles.container}>
                 {this.state.subject.tests.map((item, index) => (
                     <TouchableOpacity key={index} style={styles.list}
                         onPress={() => this.props.navigation.navigate(
@@ -48,13 +48,16 @@ class SubjectDetailScreen extends Component {
                         </Text>
                     </TouchableOpacity>
                 ))}
-            </ScrollView>
+            </View>
         )
     }
 }
 const styles = StyleSheet.create({
     container: {
-        padding: 10
+
+        backgroundColor: "#f7f7f7",
+        flex: 1,
+        flexDirection: "column"
     },
     h1: {
         fontSize: 25,
@@ -68,10 +71,11 @@ const styles = StyleSheet.create({
         fontSize: 15
     },
     list: {
-        borderBottomColor: '#f9f7f5',
-        borderBottomWidth: 2,
+        borderBottomColor: '#f2f2f2',
+        borderBottomWidth: 1,
         padding: 20,
         fontSize: 25,
+        backgroundColor: "#fff"
     },
     listText: {
         fontWeight: "500"

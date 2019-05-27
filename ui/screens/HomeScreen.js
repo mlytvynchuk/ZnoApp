@@ -69,7 +69,16 @@ class HomeScreen extends Component {
                 ]
 
 
+            },
+            {
+                name: "Українська мова",
+                image: require('../assets/img/subIcons/ua.png')
+            },
+            {
+                name: "Англійська мова",
+                image: require('../assets/img/subIcons/eng.png')
             }
+
         ]
     }
     static navigationOptions = {
@@ -90,6 +99,7 @@ class HomeScreen extends Component {
             fontWeight: 'bold',
             fontSize: 30,
             paddingBottom: 10,
+
         },
     };
     render() {
@@ -107,10 +117,7 @@ const styles = StyleSheet.create({
         // paddingTop: 50,
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: '#f7f7f7',
-
-        // alignItems: 'center',
-        // justifyContent: 'center',
+        backgroundColor: "#f7f7f7",
     },
     h1: {
         fontSize: 40,
