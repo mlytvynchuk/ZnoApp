@@ -22,12 +22,17 @@ class SubjectDetailScreen extends Component {
                     height: 0,
                 },
 
+
             },
             headerTitleStyle: {
                 fontWeight: 'bold',
                 fontSize: 25,
-                paddingBottom: 10,
+
             },
+            headerTintColor: "black",
+            headerLeftStyle: {
+                color: "black"
+            }
         }
     };
 

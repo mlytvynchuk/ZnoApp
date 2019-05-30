@@ -19,7 +19,8 @@ export class SubjectTest extends Component {
         currentQuestionIndex: 0,
         hours: 0,
         minutes: 0,
-        seconds: 0
+        seconds: 0,
+        onPressLightBox: false,
 
     }
 
@@ -82,6 +83,12 @@ export class SubjectTest extends Component {
                 answers: answers
             })
         }
+        onPressLightBox = () => {
+            this.setState({
+                onPressLightBox: !this.state.onPressLightBox
+            })
+            alert("ldsads")
+        }
         calculateResult = () => {
             const { answers, questions } = this.state;
             let answArr = [];
@@ -119,10 +126,11 @@ export class SubjectTest extends Component {
         const questionsList = (
             <ScrollView horizontal style={styles.questionsList}>
                 {this.state.questions && this.state.questions.map((item, index) => (
-                    <TouchableOpacity key={index} style={styles.questionListItem} onPress={() => getQuestionById(index)} >
+                    <TouchableOpacity key={index} style={{ ...styles.questionListItem }} onPress={() => getQuestionById(index)} >
                         <Text style={{ fontWeight: "500", fontSize: 15, color: "#fff" }}>{index + 1}</Text>
                     </TouchableOpacity>
-                ))}
+                ))
+                }
             </ScrollView>
         )
         const brBlock = (index) => {
@@ -166,8 +174,8 @@ export class SubjectTest extends Component {
                             onClick={() => handleCheckBox(index, item)
                             }
                             isChecked={isChecked(index)}
-                            checkedImage={<Image source={require('../assets/img/checkbox/checked.png')} style={{ width: 35, height: 35 }} />}
-                            unCheckedImage={<Image source={require('../assets/img/checkbox/unchecked.png')} style={{ width: 35, height: 35 }} />}
+                            checkedImage={<Image source={require('../assets/img/checkbox/checked.png')} style={{ width: 35, height: 35, borderRadius: 22, padding: 20 }} />}
+                            unCheckedImage={<Image source={require('../assets/img/checkbox/unchecked.png')} style={{ width: 35, height: 35, borderRadius: 22, padding: 20 }} />}
 
                         //unCheckedImage={<Image source={require('../../page/my/img/ic_check_box_outline_blank.png')} style={this.props.theme.styles.tabBarSelectedIcon} />}
                         />
@@ -207,12 +215,13 @@ export class SubjectTest extends Component {
                 </TouchableOpacity>
             </View>
         )
-        const imageQuestion = (
-            <View>
-                <Image source={currentQuestion.image} style={styles.imageQuestion} resizeMode={'center'} resizeMethod={'resize'} style={{ width: 500 }} />
-            </View>
-        )
         const next = currentQuestionIndex == questions.length - 1 ? nextResult : nextQuestion;
+        const LightImage = () => (
+            <ScrollView maximumZoomScale={4} minimumZoomScale={0.5} contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Image source={currentQuestion.image} style={styles.imageQuestion} resizeMode={'center'} resizeMethod={'resize'} width={"100%"} />
+            </ScrollView>
+
+        )
         return (
             <ScrollView>
                 <View style={styles.nextContainer}>
@@ -225,11 +234,10 @@ export class SubjectTest extends Component {
                 </View>
                 {questionsList}
                 <View>
-                    <Lightbox>
-                        <ScrollView maximumZoomScale={4} contentContainerStyle={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
-                            {imageQuestion}
-                        </ScrollView>
+                    <Lightbox swipeToDissmis swipeToDismiss={false} renderContent={LightImage}>
+                        <Image source={currentQuestion.image} style={styles.imageQuestion} resizeMode={'contain'} resizeMethod={'resize'} width={"100%"} height={90} marginTop={15} />
                     </Lightbox>
+                    <Text>Натисніть на зображення, щоб збільшити</Text>
                 </View>
                 < View style={styles.quizContainer}>
                     <Text style={styles.title}>{currentQuestion.question}</Text>
@@ -267,11 +275,11 @@ const styles = StyleSheet.create({
         marginRight: 5,
         fontSize: 15,
         fontWeight: "400",
-        padding: 8,
-        paddingLeft: 12,
-        paddingRight: 12,
+        padding: 11,
+        paddingLeft: 15,
+        paddingRight: 15,
         backgroundColor: "black",
-        borderRadius: 7,
+        borderRadius: 10,
         color: "#fff"
     },
     checkBoxContainer: {
@@ -285,10 +293,10 @@ const styles = StyleSheet.create({
 
         display: "flex",
         flexDirection: "row",
-        justifyContent: "center",
+
     },
     answerInput: {
-        backgroundColor: "#f1f1f1",
+        backgroundColor: "#f7f7f7",
         textAlign: "center",
         height: 50
     },
@@ -336,6 +344,16 @@ const styles = StyleSheet.create({
     imageQuestion: {
         display: "flex",
         width: win.width
+    },
+    onPressLightBox: {
+        resizeMode: 'center',
+        alignItems: 'center'
+    },
+    outPressLightBox: {
+        resizeMode: 'stretch'
+    },
+    active: {
+        opacity: 0.8
     }
 
 })

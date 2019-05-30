@@ -10,7 +10,7 @@ class HomeScreen extends Component {
                 image: require('../../ui/assets/img/subIcons/math.png'),
                 tests: [
                     {
-                        name: "Тест з математики зно 2017-2018",
+                        name: "ЗНО онлайн 2019 року з математики – основна сесія",
                         questions: [
                             {
                                 type: "choices",
@@ -18,7 +18,7 @@ class HomeScreen extends Component {
                                 image: require('../../ui/assets/img/tests/math/2019-zno/1.png'),
                                 choices: ["А", "Б", "В", "Г", "Д"],
                                 answer: "А",
-                                value: 5
+                                value: 1
                             },
                             {
                                 type: "choices",
@@ -26,23 +26,74 @@ class HomeScreen extends Component {
                                 image: require('../../ui/assets/img/tests/math/2019-zno/2.png'),
                                 choices: ["А", "Б", "В", "Г", "Д"],
                                 answer: "А",
-                                value: 5
+                                value: 1
                             },
                             {
-                                type: "answer",
-                                question: "Скільки буде 15/5",
-                                image: require('../../ui/assets/img/uncheckedBox.png'),
-                                answer: "А",
-                                value: 5
-                            },
-                            {
-                                type: "mchoices",
+                                type: "choices",
                                 question: "",
-                                image: require('../../ui/assets/img/tests/math/2019-zno/2.png'),
+                                image: require('../../ui/assets/img/tests/math/2019-zno/3.png'),
                                 choices: ["А", "Б", "В", "Г", "Д"],
-                                answer: ["А", "Б", "В", "Г", "Д"],
-                                value: 5
+                                answer: "А",
+                                value: 1
                             },
+                            {
+                                type: "choices",
+                                question: "",
+                                image: require('../../ui/assets/img/tests/math/2019-zno/4.png'),
+                                choices: ["А", "Б", "В", "Г", "Д"],
+                                answer: "А",
+                                value: 1
+                            },
+                            {
+                                type: "choices",
+                                question: "",
+                                image: require('../../ui/assets/img/tests/math/2019-zno/5.png'),
+                                choices: ["А", "Б", "В", "Г", "Д"],
+                                answer: "А",
+                                value: 1
+                            },
+                            {
+                                type: "choices",
+                                question: "",
+                                image: require('../../ui/assets/img/tests/math/2019-zno/6.png'),
+                                choices: ["А", "Б", "В", "Г", "Д"],
+                                answer: "А",
+                                value: 1
+                            },
+                            {
+                                type: "choices",
+                                question: "",
+                                image: require('../../ui/assets/img/tests/math/2019-zno/7.png'),
+                                choices: ["А", "Б", "В", "Г", "Д"],
+                                answer: "А",
+                                value: 1
+                            },
+                            {
+                                type: "choices",
+                                question: "",
+                                image: require('../../ui/assets/img/tests/math/2019-zno/8.png'),
+                                choices: ["А", "Б", "В", "Г", "Д"],
+                                answer: "А",
+                                value: 1
+                            },
+                            {
+                                type: "choices",
+                                question: "",
+                                image: require('../../ui/assets/img/tests/math/2019-zno/9.png'),
+                                choices: ["А", "Б", "В", "Г", "Д"],
+                                answer: "А",
+                                value: 1
+                            },
+                            {
+                                type: "choices",
+                                question: "",
+                                image: require('../../ui/assets/img/tests/math/2019-zno/10.png'),
+                                choices: ["А", "Б", "В", "Г", "Д"],
+                                answer: "А",
+                                value: 1
+                            },
+
+
                         ],
 
                     },
