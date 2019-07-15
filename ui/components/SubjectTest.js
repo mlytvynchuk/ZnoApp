@@ -12,7 +12,7 @@ import {
 import CheckBox from "react-native-check-box";
 import update from "react-addons-update";
 import Lightbox from "react-native-lightbox";
-
+import CountDown from 'react-native-countdown-component';
 export class SubjectTest extends Component {
   state = {
     name: this.props.navigation.getParam("name"),
@@ -319,8 +319,21 @@ export class SubjectTest extends Component {
           >
             <Text style={styles.nextResultText}>Результат</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => calculateResult()}>
-            <Text>0:00:00</Text>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate("ResultScreen", {
+                questions: this.props.navigation.getParam("questions"),
+                answers: this.state.answers,
+                enterMark: 110
+              })
+            }>
+            <CountDown
+              until={60 * 60 + 30 * 60}
+              onFinish={() => alert(ca)}
+              onPress={() => alert("Ваш час")}
+              digitStyle={{backgroundColor: "#fff"}}
+              timeToShow={['H', 'M', 'S']}
+              size={13}
+              timeLabels={{m: null, s: null}}
+            />
           </TouchableOpacity>
         </View>
         {questionsList}
