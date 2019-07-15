@@ -44,6 +44,7 @@ export class SubjectTest extends Component {
         }
       }
     }
+
     this.setState({
       answers: answers
     });
@@ -54,6 +55,14 @@ export class SubjectTest extends Component {
         currentQuestionIndex: index
       });
     };
+    getCurrentQuestionStyle = (index) => {
+      if (index == this.state.currentQuestionIndex){
+        return styles.currentQuestion
+      }
+      else{
+        return styles.questionListItem
+      }
+    }
     // starts our quiz:
     getQuestionById(0);
     handleCheckBox = (index, answer) => {
@@ -142,7 +151,7 @@ export class SubjectTest extends Component {
           this.state.questions.map((item, index) => (
             <TouchableOpacity
               key={index}
-              style={{ ...styles.questionListItem }}
+              style={styles.questionListItem}
               onPress={() => goToQuestionAndScroll(index)}
             >
               <Text style={{ fontWeight: "500", fontSize: 15, color: "#fff" }}>
@@ -299,7 +308,15 @@ export class SubjectTest extends Component {
     return (
       <ScrollView style={styles.mainContainer}>
         <View style={styles.nextContainer}>
-          <TouchableOpacity onPress={() => calculateResult()}>
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.navigate("ResultScreen", {
+                questions: this.props.navigation.getParam("questions"),
+                answers: this.state.answers,
+                enterMark: 110
+              })
+            }
+          >
             <Text style={styles.nextResultText}>Результат</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => calculateResult()}>
@@ -417,7 +434,7 @@ const styles = StyleSheet.create({
   },
   prevQuestionText: {
     fontSize: 15,
-    fontWeight: "400",
+    fontWeight: "500",
     color: "#B0B9BF",
     padding: 8
   },
@@ -434,6 +451,9 @@ const styles = StyleSheet.create({
   },
   active: {
     opacity: 0.8
+  },
+  currentQuestion: {
+    opacity: 0.5
   }
 });
 export default SubjectTest;
