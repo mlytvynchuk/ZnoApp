@@ -79,19 +79,36 @@ class ResultScreen extends Component {
               />
             </ScrollView>
           );
+
+          calculateQuestionMark = (question, index) =>{
+            let i = question.id;
+            var val = 0;
+            let answers = this.props.navigation.getParam("answers");
+            if(question.type !== "mchoices"){
+              if(question.answer == answers[index]){
+              return question.value;
+              }
+            }
+            else{
+              let val = 0;
+              for(var j = 0; j< answers[index].length; j++){
+                if(question.answer[j] == answers[index][j]){
+                  val+=1;
+                }
+              }
+              return val;
+            }
+            return "0";
+          }
           return (
             <View key={index}>
               <View>
                 <Text style={{fontWeight: "500", fontSize: 16}}>
-                  Завдання {index} -{" "}
-                  {this.props.navigation.getParam("answers")[index] ==
-                  item.answer
-                    ? item.value
-                    : 0}{" "}
+                  Завдання {index+1} - {calculateQuestionMark(item, index)}{" "}
                   балів
                 </Text>
                 <Text>
-                  Правильна відповідь: {item.answer}{"\n"}
+                  Правильна відповідь: {item.answer} {"\n"}
                   Ваша відповідь: {this.props.navigation.getParam("answers")[index-0] ? this.props.navigation.getParam("answers")[index] : "Не обрано"}
                 </Text>
               </View>

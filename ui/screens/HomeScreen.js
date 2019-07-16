@@ -25,7 +25,7 @@ class HomeScreen extends Component {
                 question: "",
                 image: require("../../ui/assets/img/tests/math/2019-zno/2.png"),
                 choices: ["А", "Б", "В", "Г", "Д"],
-                answer: "А",
+                answer: "Г",
                 value: 1
               },
               {
@@ -33,7 +33,7 @@ class HomeScreen extends Component {
                 question: "",
                 image: require("../../ui/assets/img/tests/math/2019-zno/3.png"),
                 choices: ["А", "Б", "В", "Г", "Д"],
-                answer: "А",
+                answer: "Д",
                 value: 1
               },
               {
@@ -41,7 +41,7 @@ class HomeScreen extends Component {
                 question: "",
                 image: require("../../ui/assets/img/tests/math/2019-zno/4.png"),
                 choices: ["А", "Б", "В", "Г", "Д"],
-                answer: "А",
+                answer: "В",
                 value: 1
               },
               {
@@ -57,7 +57,7 @@ class HomeScreen extends Component {
                 question: "",
                 image: require("../../ui/assets/img/tests/math/2019-zno/6.png"),
                 choices: ["А", "Б", "В", "Г", "Д"],
-                answer: "А",
+                answer: "Д",
                 value: 1
               },
               {
@@ -65,7 +65,7 @@ class HomeScreen extends Component {
                 question: "",
                 image: require("../../ui/assets/img/tests/math/2019-zno/7.png"),
                 choices: ["А", "Б", "В", "Г", "Д"],
-                answer: "А",
+                answer: "Б",
                 value: 1
               },
               {
@@ -73,7 +73,7 @@ class HomeScreen extends Component {
                 question: "",
                 image: require("../../ui/assets/img/tests/math/2019-zno/8.png"),
                 choices: ["А", "Б", "В", "Г", "Д"],
-                answer: "А",
+                answer: "Д",
                 value: 1
               },
               {
@@ -89,9 +89,114 @@ class HomeScreen extends Component {
                 question: "",
                 image: require("../../ui/assets/img/tests/math/2019-zno/10.png"),
                 choices: ["А", "Б", "В", "Г", "Д"],
+                answer: "Г",
+                value: 1
+              },
+              {
+                type: "choices",
+                question: "",
+                image: require("../../ui/assets/img/tests/math/2019-zno/11.png"),
+                choices: ["А", "Б", "В", "Г", "Д"],
+                answer: "В",
+                value: 1
+              },
+              {
+                type: "choices",
+                question: "",
+                image: require("../../ui/assets/img/tests/math/2019-zno/12.png"),
+                choices: ["А", "Б", "В", "Г", "Д"],
                 answer: "А",
                 value: 1
-              }
+              },
+              {
+                type: "choices",
+                question: "",
+                image: require("../../ui/assets/img/tests/math/2019-zno/13.png"),
+                choices: ["А", "Б", "В", "Г", "Д"],
+                answer: "В",
+                value: 1
+              },
+              {
+                type: "choices",
+                question: "",
+                image: require("../../ui/assets/img/tests/math/2019-zno/14.png"),
+                choices: ["А", "Б", "В", "Г", "Д"],
+                answer: "Б",
+                value: 1
+              },
+              {
+                type: "choices",
+                question: "",
+                image: require("../../ui/assets/img/tests/math/2019-zno/15.png"),
+                choices: ["А", "Б", "В", "Г", "Д"],
+                answer: "Д",
+                value: 1
+              },
+              {
+                type: "choices",
+                question: "",
+                image: require("../../ui/assets/img/tests/math/2019-zno/16.png"),
+                choices: ["А", "Б", "В", "Г", "Д"],
+                answer: "Г",
+                value: 1
+              },
+              {
+                type: "choices",
+                question: "",
+                image: require("../../ui/assets/img/tests/math/2019-zno/17.png"),
+                choices: ["А", "Б", "В", "Г", "Д"],
+                answer: "А",
+                value: 1
+              },
+              {
+                type: "choices",
+                question: "",
+                image: require("../../ui/assets/img/tests/math/2019-zno/18.png"),
+                choices: ["А", "Б", "В", "Г", "Д"],
+                answer: "Г",
+                value: 1
+              },
+              {
+                type: "choices",
+                question: "",
+                image: require("../../ui/assets/img/tests/math/2019-zno/19.png"),
+                choices: ["А", "Б", "В", "Г", "Д"],
+                answer: "Б",
+                value: 1
+              },
+              {
+                type: "choices",
+                question: "",
+                image: require("../../ui/assets/img/tests/math/2019-zno/20.png"),
+                choices: ["А", "Б", "В", "Г", "Д"],
+                answer: "Г",
+                value: 1
+              },
+              {
+                type: "mchoices",
+                question: "",
+                image: require("../../ui/assets/img/tests/math/2019-zno/21.png"),
+                choices: ["А", "Б", "В", "Г"],
+                answer: ["Г","В","Д","А"],
+                value: 4
+              },
+              {
+                type: "mchoices",
+                question: "",
+                image: require("../../ui/assets/img/tests/math/2019-zno/22.png"),
+                choices: ["А", "Б", "В", "Г"],
+                answer: ["Б","Д","Г","А"],
+                value: 4
+              },
+              {
+                type: "mchoices",
+                question: "",
+                image: require("../../ui/assets/img/tests/math/2019-zno/23.png"),
+                choices: ["А", "Б", "В", "Г"],
+                answer: ["Б","А","Г","В"],
+                value: 4
+              },
+
             ]
           },
           {
@@ -101,7 +206,7 @@ class HomeScreen extends Component {
                 type: "choices",
                 question: "Скільки буде 51231+5",
                 image: require("../../ui/assets/img/uncheckedBox.png"),
-                choices: ["A", "Б", "В", "Г", "Д"],
+                answers: ["A", "Б", "В", "Г", "Д"],
                 answer: "А"
               },
               {
