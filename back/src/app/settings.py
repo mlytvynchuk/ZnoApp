@@ -79,13 +79,21 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd20pbq8opsn0vo',
-        'USER': 'vfrmvtbkrnclwz',
-        'PASSWORD': 'f9b0470be8c0854f35f26c485c93ea75c2554c775f530ebef56007aa7742feff',
-        'HOST': 'ec2-54-247-170-5.eu-west-1.compute.amazonaws.com',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.mysql', 
+        'NAME': 'u522070206_zoo',
+        'USER': 'u522070206_zno',
+        'PASSWORD': 'gV34BUER4P',
+        'HOST': 'sql262.main-hosting.eu',   # Or an IP Address that your DB is hosted on
+        'PORT': '3306',
     }
+     # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'd20pbq8opsn0vo',
+    #     'USER': 'vfrmvtbkrnclwz',
+    #     'PASSWORD': 'f9b0470be8c0854f35f26c485c93ea75c2554c775f530ebef56007aa7742feff',
+    #     'HOST': 'ec2-54-247-170-5.eu-west-1.compute.amazonaws.com',
+    #     'PORT': '5432',
+    # }
 }
 
 

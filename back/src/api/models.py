@@ -30,14 +30,13 @@ class QuestionChoice(models.Model):
 
 
 class Question(models.Model):
-    index = models.IntegerField()
+    index = models.FloatField()
     test = models.ForeignKey("Test", on_delete=models.CASCADE, related_name="questions")
-    typeOf = models.ForeignKey("QuestionType", on_delete=models.CASCADE, verbose_name="type") 
+    typeOf = models.ForeignKey("QuestionType", on_delete=models.CASCADE, verbose_name="type", default=1) 
     question = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to="uploads/", null=True, blank=True)
     answer = models.TextField()
-    value = models.IntegerField()
-    choices = models.ForeignKey("QuestionChoice", related_name="questions", on_delete=models.CASCADE)
-
+    value = models.IntegerField(default=1)
+    choices = models.ForeignKey("QuestionChoice", related_name="questions", on_delete=models.CASCADE, null=True, blank=True,default=1)
     def __str__(self):
         return str(self.index) + " " + self.test.name
